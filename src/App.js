@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import CardList from './components/CardList.js';
+import SearchBox from "./components/searchBox"
+import "./App.css"
 
 class App extends Component {
 
@@ -7,6 +10,7 @@ class App extends Component {
     this.state = {
       items: [],
       isloaded: false,
+      searchField: " ",
     }
   }
 
@@ -20,35 +24,37 @@ class App extends Component {
         })
       });
   }
+  onSearchChange = (e) => {
+    this.setState({searchField: e.target.value});
+  };
 
   render() {
 
-    var{ isLoaded, items } = this.state;
+    const {items,searchField} = this.state;
+    const filteredItems = items.filter(
+      item => item.name.toLowerCase()
+      .includes(searchField.toLowerCase())
+    )
+
+
+    const{ isLoaded} = this.state;
 
     if (!isLoaded) {
         return <div>Loading...</div>
     }
 
     else {
-
        return (
           <div className="App">
-            <ui>
-              {items.map(item => (
-                <li key={item.id}>
-                   Name: {item.name} | Email: {item.email} |
-                   Website: {item.website}
+            <SearchBox placeholder="search box"
+          handleChange={this.onSearchChange} />
 
-
-                </li>
-              ))}
-            </ui>
-          </div>
+          <CardList items={filteredItems}/>
+          </div>    
     );
 
     }
   }
 }
-
 
 export default App;
