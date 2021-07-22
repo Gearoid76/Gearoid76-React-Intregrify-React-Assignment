@@ -6,8 +6,9 @@ import './Card.css'
 const Card = (props) => (
     <li className="card">
        <h3>{props.name}</h3>
-       <p>email: {props.email}</p>
-       <p>website: {props.website}</p>
+       <p> {props.email}</p>
+       <p> {props.website}</p>
+       
     </li>
 )
 
